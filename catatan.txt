@@ -1,0 +1,3 @@
+php artisan make:migration create_buat_table
+php artisan make:model Buat
+php artisan make:controller BuatController
