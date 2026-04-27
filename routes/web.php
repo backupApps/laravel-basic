@@ -1,17 +1,10 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\TableController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () { // akses url di browser
-    return view('dashboard'); // akses file dashboard.blade.php
-})->name('dashboard'); // digunakan di leftbar
-
-Route::get('/tabel', function () { // akses url di browser
-    return view('tabel'); // akses file tabel.blade.php
-})->name('tabel'); // digunakan di leftbar
-
-Route::get('/form', function () {
-    return view('form');
-})->name('form');
-
-// buat file -> atur @extends() @section -> copas kode template -> atur route -> tambah di menu
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('form', [FormController::class, 'index'])->name('form');
+Route::get('tabel', [TableController::class, 'index'])->name('tabel');
