@@ -12,7 +12,8 @@
                         the construction function: <code>$().DataTable();</code>.
                     </p>
 
-                    <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <table id="datatable" class="table table-bordered dt-responsive nowrap"
+                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -21,6 +22,7 @@
                                 <th>Alamat</th>
                                 <th>Nama Ayah</th>
                                 <th>Nama Ibu</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,6 +34,12 @@
                                     <td>{{ $mhs->alamat }}</td>
                                     <td>{{ $mhs->orangtua?->nama_ayah }}</td>
                                     <td>{{ $mhs->orangtua?->nama_ibu }}</td>
+                                    <td>
+                                        <a href="{{ route('form.edit', $mhs->id) }}" class="btn btn-sm btn-info">
+                                            <i class="mdi mdi-pen"></i>
+                                            Edit
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
