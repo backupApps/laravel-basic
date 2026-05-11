@@ -9,12 +9,15 @@ use Illuminate\Http\Request;
 class FormController extends Controller
 {
     // fungsi di dalam class disebut METHOD
-    public function index()
+
+    // route ke halaman form
+    public function halamanForm()
     {
         return view('form');
     }
 
-    public function simpan(Request $request)
+    // proses simpan data
+    public function simpanData(Request $request)
     {
         $request->validate([
             'nama' => 'required',
@@ -41,14 +44,14 @@ class FormController extends Controller
         return redirect()->route('form')->with('sukses', 'Data mahasiswa berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function halamanEdit($id)
     {
         $mahasiswa = Mahasiswa::with('orangtua')->findOrFail($id);
 
         return view('form-edit', compact('mahasiswa'));
     }
 
-    public function update(Request $request, $id)
+    public function prosesEdit(Request $request, $id)
     {
         $mahasiswa = Mahasiswa::findOrFail($id);
 
@@ -74,7 +77,7 @@ class FormController extends Controller
         return back()->with('sukses', 'Data mahasiswa berhasil diperbarui.');
     }
 
-    public function delete($id)
+    public function hapusData($id)
     {
         Mahasiswa::find($id)->delete();
 

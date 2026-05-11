@@ -6,12 +6,6 @@
             <div class="card">
                 <div class="card-body">
 
-                    @if (session('sukses'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('sukses') }}
-                        </div>
-                    @endif
-
                     <h4 class="card-title">Form Input Data Mahasiswa</h4>
                     <p class="card-title-desc">Input data mahasiswa terbaru.</p>
 
