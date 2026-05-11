@@ -14,6 +14,9 @@ Route::post('form', [FormController::class, 'simpan'])->name('form.simpan');
 Route::get('/form-edit/{id}', [FormController::class, 'edit'])->name('form.edit');
 Route::put('/form-update/{id}', [FormController::class, 'update'])->name('form.update');
 
+// proses hapus
+Route::delete('/form-hapus/{id}', [FormController::class, 'delete'])->name('form.delete');
+
 // tabel
 Route::get('tabel', [TableController::class, 'index'])->name('tabel');
 

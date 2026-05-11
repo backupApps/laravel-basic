@@ -73,4 +73,11 @@ class FormController extends Controller
 
         return back()->with('sukses', 'Data mahasiswa berhasil diperbarui.');
     }
+
+    public function delete($id)
+    {
+        Mahasiswa::find($id)->delete();
+
+        return back()->with('sukses', 'Data mahasiswa berhasil dihapus.');
+    }
 }

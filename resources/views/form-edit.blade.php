@@ -69,7 +69,7 @@
                                     <input type="text" name="nama_ayah"
                                         class="form-control @error('nama_ayah') is-invalid @enderror"
                                         placeholder="Nama Ayah"
-                                        value="{{ old('nama_ayah', $mahasiswa->orangtua->nama_ayah) }}">
+                                        value="{{ old('nama_ayah', $mahasiswa->orangtua?->nama_ayah) }}">
                                     @error('nama_ayah')
                                         <span class="invalid-feedback">
                                             {{ $message }}
@@ -83,7 +83,7 @@
                                     <label for="validationCustom05" class="form-label">NAMA IBU</label>
                                     <input type="text" name="nama_ibu"
                                         class="form-control @error('nama_ibu') is-invalid @enderror" placeholder="Nama Ibu"
-                                        value="{{ old('nama_ibu', $mahasiswa->orangtua->nama_ibu) }}">
+                                        value="{{ old('nama_ibu', $mahasiswa->orangtua?->nama_ibu) }}">
                                     @error('nama_ibu')
                                         <span class="invalid-feedback">
                                             {{ $message }}

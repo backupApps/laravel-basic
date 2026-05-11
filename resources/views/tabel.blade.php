@@ -35,10 +35,22 @@
                                     <td>{{ $mhs->orangtua?->nama_ayah }}</td>
                                     <td>{{ $mhs->orangtua?->nama_ibu }}</td>
                                     <td>
+                                        {{-- edit --}}
                                         <a href="{{ route('form.edit', $mhs->id) }}" class="btn btn-sm btn-info">
                                             <i class="mdi mdi-pen"></i>
                                             Edit
                                         </a>
+
+                                        {{-- hapus --}}
+                                        <button class="btn btn-sm btn-danger" onclick="deleteData({{ $mhs->id }})">
+                                            <i class="mdi mdi-trash-can"></i>
+                                            Hapus
+                                        </button>
+                                        <form action="{{ route('form.delete', $mhs->id) }}" method="post" id="delete{{ $mhs->id }}"
+                                            class="d-none">
+                                            @csrf
+                                            @method('delete')
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -50,3 +62,19 @@
         </div> <!-- end col -->
     </div>
 @endsection
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function deleteData(id) {
+        Swal.fire({
+            title: "Anda Yakin?",
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: "warning"
+        }).then(result => {
+            if (result.isConfirmed) {
+                document.getElementById('delete' + id).submit();
+            }
+        });
+    }
+</script>
