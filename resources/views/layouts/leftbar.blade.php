@@ -27,6 +27,20 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('matakuliah') }}" class="waves-effect">
+                        <i class="ri-dashboard-line"></i>
+                        <span>Matakuliah</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('mahasiswa.matakuliah') }}" class="waves-effect">
+                        <i class="ri-dashboard-line"></i>
+                        <span>Mahasiswa Matakuliah</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
         <!-- Sidebar -->
