@@ -15,14 +15,4 @@ class Mahasiswa extends Model
         'nim',
         'alamat'
     ];
-
-    public function orangtua(): HasOne
-    {
-        return $this->hasOne(Orangtua::class, 'mahasiswa_id', 'id');
-    }
-
-    public function mahasiswa_matakuliahs(): HasMany
-    {
-        return $this->hasMany(MahasiswaMatakuliah::class, 'mahasiswa_id', 'id');
-    }
 }

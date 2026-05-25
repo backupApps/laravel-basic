@@ -4,40 +4,35 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title">Menu</li>
+                <li class="menu-title text-white">Menu</li>
 
                 <li>
                     <a href="{{ route('dashboard') }}" class="waves-effect">
-                        <i class="ri-dashboard-line"></i>
+                        <i class="mdi mdi-view-dashboard"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="{{ route('tabel') }}" class="waves-effect">
-                        <i class="ri-dashboard-line"></i>
-                        <span>Tabel</span>
+                    <a href="#" class="waves-effect">
+                        <i class="mdi mdi-account-box"></i>
+                        <span>Peminjaman</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="{{ route('form') }}" class="waves-effect">
-                        <i class="ri-dashboard-line"></i>
-                        <span>Form</span>
+                    <a href="#" class="waves-effect">
+                        <i class="mdi mdi-book-alphabet"></i>
+                        <span>Laporan</span>
                     </a>
                 </li>
 
-                <li>
-                    <a href="{{ route('matakuliah') }}" class="waves-effect">
-                        <i class="ri-dashboard-line"></i>
-                        <span>Matakuliah</span>
-                    </a>
-                </li>
+                <li class="menu-title text-white">Data Master</li>
 
                 <li>
-                    <a href="{{ route('mahasiswa.matakuliah') }}" class="waves-effect">
-                        <i class="ri-dashboard-line"></i>
-                        <span>Mahasiswa Matakuliah</span>
+                    <a href="{{ route('barang') }}" class="waves-effect">
+                        <i class="mdi mdi-stack-exchange"></i>
+                        <span>Barang</span>
                     </a>
                 </li>
 

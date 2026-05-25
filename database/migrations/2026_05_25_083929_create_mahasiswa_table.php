@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('mahasiswa', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('prodi_id')->constrained('prodis')->restrictOnDelete();
+            $table->foreignId('role_user_id')->constrained('role_users')->restrictOnDelete();
 
             $table->string('nama', 50); // 255
             $table->string('nim', 10); // 255
+            $table->string('no_hp', 15);
             $table->text('alamat');
 
             $table->timestamps();
