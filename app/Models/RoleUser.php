@@ -3,8 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RoleUser extends Model
 {
-    //
+    protected $fillable = [
+        'nama_role',
+    ];
+
+    public function mahasiswa(): HasMany
+    {
+        return $this->hasMany(Mahasiswa::class);
+    }
+
+    public function admins(): HasMany
+    {
+        return $this->hasMany(Admin::class);
+    }
 }

@@ -14,14 +14,14 @@
                 </li>
 
                 <li>
-                    <a href="#" class="waves-effect">
+                    <a href="{{ route('peminjaman') }}" class="waves-effect">
                         <i class="mdi mdi-account-box"></i>
                         <span>Peminjaman</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="#" class="waves-effect">
+                    <a href="{{ route('laporan') }}" class="waves-effect">
                         <i class="mdi mdi-book-alphabet"></i>
                         <span>Laporan</span>
                     </a>
@@ -33,6 +33,20 @@
                     <a href="{{ route('barang') }}" class="waves-effect">
                         <i class="mdi mdi-stack-exchange"></i>
                         <span>Barang</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('mahasiswa') }}" class="waves-effect">
+                        <i class="mdi mdi-school"></i>
+                        <span>Mahasiswa</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin') }}" class="waves-effect">
+                        <i class="mdi mdi-account-tie"></i>
+                        <span>Admin</span>
                     </a>
                 </li>
 
