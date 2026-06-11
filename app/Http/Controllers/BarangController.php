@@ -27,7 +27,14 @@ class BarangController extends Controller
 
     public function store(Request $request)
     {
-        Barang::create($this->validatedData($request));
+        $data = $request->validate([
+            'kategori_barang_id' => ['required', 'exists:kategori_barangs,id'],
+            'kode_barang' => ['required', 'string', 'max:50', 'unique:barangs,kode_barang'],
+            'nama_barang' => ['required', 'string', 'max:100'],
+            'jumlah_barang' => ['required', 'integer', 'min:0'],
+        ]);
+
+        Barang::create($data);
 
         return redirect()
             ->route('barang')
@@ -43,7 +50,19 @@ class BarangController extends Controller
 
     public function update(Request $request, Barang $barang)
     {
-        $barang->update($this->validatedData($request, $barang));
+        $data = $request->validate([
+            'kategori_barang_id' => ['required', 'exists:kategori_barangs,id'],
+            'kode_barang' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('barangs', 'kode_barang')->ignore($barang),
+            ],
+            'nama_barang' => ['required', 'string', 'max:100'],
+            'jumlah_barang' => ['required', 'integer', 'min:0'],
+        ]);
+
+        $barang->update($data);
 
         return redirect()
             ->route('barang')
@@ -57,29 +76,5 @@ class BarangController extends Controller
         return redirect()
             ->route('barang')
             ->with('success', 'Data barang berhasil dihapus.');
-    }
-
-    private function validatedData(Request $request, ?Barang $barang = null): array
-    {
-        return $request->validate([
-            'kategori_barang_id' => ['required', 'exists:kategori_barangs,id'],
-            'kode_barang' => [
-                'required',
-                'string',
-                'max:50',
-                Rule::unique('barangs', 'kode_barang')->ignore($barang),
-            ],
-            'nama_barang' => ['required', 'string', 'max:100'],
-            'jumlah_barang' => ['required', 'integer', 'min:0'],
-        ], [
-            'kategori_barang_id.required' => 'Kategori wajib dipilih.',
-            'kategori_barang_id.exists' => 'Kategori tidak valid.',
-            'kode_barang.required' => 'Kode barang wajib diisi.',
-            'kode_barang.unique' => 'Kode barang sudah digunakan.',
-            'nama_barang.required' => 'Nama barang wajib diisi.',
-            'jumlah_barang.required' => 'Jumlah barang wajib diisi.',
-            'jumlah_barang.integer' => 'Jumlah barang harus berupa angka.',
-            'jumlah_barang.min' => 'Jumlah barang tidak boleh kurang dari 0.',
-        ]);
     }
 }

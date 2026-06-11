@@ -24,9 +24,13 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        Admin::create($this->validatedData($request) + [
-            'role_user_id' => $this->roleId('Admin'),
+        $data = $request->validate([
+            'nama' => ['required', 'string', 'max:32'],
         ]);
+
+        $roleAdmin = RoleUser::where('nama_role', 'Admin')->firstOrFail();
+
+        Admin::create($data + ['role_user_id' => $roleAdmin->id]);
 
         return redirect()
             ->route('admin')
@@ -40,9 +44,13 @@ class AdminController extends Controller
 
     public function update(Request $request, Admin $admin)
     {
-        $admin->update($this->validatedData($request) + [
-            'role_user_id' => $this->roleId('Admin'),
+        $data = $request->validate([
+            'nama' => ['required', 'string', 'max:32'],
         ]);
+
+        $roleAdmin = RoleUser::where('nama_role', 'Admin')->firstOrFail();
+
+        $admin->update($data + ['role_user_id' => $roleAdmin->id]);
 
         return redirect()
             ->route('admin')
@@ -56,19 +64,5 @@ class AdminController extends Controller
         return redirect()
             ->route('admin')
             ->with('success', 'Data admin berhasil dihapus.');
-    }
-
-    private function validatedData(Request $request): array
-    {
-        return $request->validate([
-            'nama' => ['required', 'string', 'max:32'],
-        ], [
-            'nama.required' => 'Nama wajib diisi.',
-        ]);
-    }
-
-    private function roleId(string $namaRole): int
-    {
-        return RoleUser::where('nama_role', $namaRole)->valueOrFail('id');
     }
 }

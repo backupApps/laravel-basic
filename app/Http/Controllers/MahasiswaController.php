@@ -28,9 +28,17 @@ class MahasiswaController extends Controller
 
     public function store(Request $request)
     {
-        Mahasiswa::create($this->validatedData($request) + [
-            'role_user_id' => $this->roleId('Mahasiswa'),
+        $data = $request->validate([
+            'prodi_id' => ['required', 'exists:prodis,id'],
+            'nama' => ['required', 'string', 'max:50'],
+            'nim' => ['required', 'string', 'max:10', 'unique:mahasiswa,nim'],
+            'no_hp' => ['required', 'string', 'max:15'],
+            'alamat' => ['required', 'string'],
         ]);
+
+        $roleMahasiswa = RoleUser::where('nama_role', 'Mahasiswa')->firstOrFail();
+
+        Mahasiswa::create($data + ['role_user_id' => $roleMahasiswa->id]);
 
         return redirect()
             ->route('mahasiswa')
@@ -46,9 +54,22 @@ class MahasiswaController extends Controller
 
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        $mahasiswa->update($this->validatedData($request, $mahasiswa) + [
-            'role_user_id' => $this->roleId('Mahasiswa'),
+        $data = $request->validate([
+            'prodi_id' => ['required', 'exists:prodis,id'],
+            'nama' => ['required', 'string', 'max:50'],
+            'nim' => [
+                'required',
+                'string',
+                'max:10',
+                Rule::unique('mahasiswa', 'nim')->ignore($mahasiswa),
+            ],
+            'no_hp' => ['required', 'string', 'max:15'],
+            'alamat' => ['required', 'string'],
         ]);
+
+        $roleMahasiswa = RoleUser::where('nama_role', 'Mahasiswa')->firstOrFail();
+
+        $mahasiswa->update($data + ['role_user_id' => $roleMahasiswa->id]);
 
         return redirect()
             ->route('mahasiswa')
@@ -62,33 +83,5 @@ class MahasiswaController extends Controller
         return redirect()
             ->route('mahasiswa')
             ->with('success', 'Data mahasiswa berhasil dihapus.');
-    }
-
-    private function validatedData(Request $request, ?Mahasiswa $mahasiswa = null): array
-    {
-        return $request->validate([
-            'prodi_id' => ['required', 'exists:prodis,id'],
-            'nama' => ['required', 'string', 'max:50'],
-            'nim' => [
-                'required',
-                'string',
-                'max:10',
-                Rule::unique('mahasiswa', 'nim')->ignore($mahasiswa),
-            ],
-            'no_hp' => ['required', 'string', 'max:15'],
-            'alamat' => ['required', 'string'],
-        ], [
-            'prodi_id.required' => 'Prodi wajib dipilih.',
-            'nama.required' => 'Nama wajib diisi.',
-            'nim.required' => 'NIM wajib diisi.',
-            'nim.unique' => 'NIM sudah digunakan.',
-            'no_hp.required' => 'No HP wajib diisi.',
-            'alamat.required' => 'Alamat wajib diisi.',
-        ]);
-    }
-
-    private function roleId(string $namaRole): int
-    {
-        return RoleUser::where('nama_role', $namaRole)->valueOrFail('id');
     }
 }
