@@ -23,6 +23,7 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Nama</th>
+                                <th>Email</th>
                                 <th>Role</th>
                                 <th>Aksi</th>
                             </tr>
@@ -32,6 +33,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration + $admins->firstItem() - 1 }}</td>
                                     <td>{{ $admin->nama }}</td>
+                                    <td>{{ $admin->email }}</td>
                                     <td>{{ $admin->roleUser->nama_role }}</td>
                                     <td>
                                         <a href="{{ route('admin.edit', $admin) }}"
@@ -47,7 +49,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center">Belum ada data admin.</td>
+                                    <td colspan="5" class="text-center">Belum ada data admin.</td>
                                 </tr>
                             @endforelse
                         </tbody>

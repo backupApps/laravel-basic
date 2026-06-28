@@ -18,6 +18,8 @@ return new class extends Migration
 
             $table->string('nama', 50); // 255
             $table->string('nim', 10); // 255
+            $table->string('email')->unique();
+            $table->string('password');
             $table->string('no_hp', 15);
             $table->text('alamat');
 

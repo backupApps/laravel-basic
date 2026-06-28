@@ -27,7 +27,11 @@
                         <i class="mdi mdi-package-variant-closed text-primary me-2"></i>
                         <b>{{ $stats['total_barang'] }}</b>
                     </h2>
-                    <a href="{{ route('barang') }}" class="text-primary">Lihat data barang</a>
+                    @if (session('auth_role') === 'admin')
+                        <a href="{{ route('barang') }}" class="text-primary">Lihat data barang</a>
+                    @else
+                        <span class="text-muted">Data inventaris kampus</span>
+                    @endif
                 </div>
             </div>
         </div>
@@ -53,7 +57,11 @@
                         <i class="mdi mdi-account-school text-info me-2"></i>
                         <b>{{ $stats['total_mahasiswa'] }}</b>
                     </h2>
-                    <a href="{{ route('mahasiswa') }}" class="text-primary">Lihat mahasiswa</a>
+                    @if (session('auth_role') === 'admin')
+                        <a href="{{ route('mahasiswa') }}" class="text-primary">Lihat mahasiswa</a>
+                    @else
+                        <span class="text-muted">Pengguna mahasiswa</span>
+                    @endif
                 </div>
             </div>
         </div>
@@ -66,7 +74,11 @@
                         <i class="mdi mdi-account-tie text-warning me-2"></i>
                         <b>{{ $stats['total_admin'] }}</b>
                     </h2>
-                    <a href="{{ route('admin') }}" class="text-primary">Lihat admin</a>
+                    @if (session('auth_role') === 'admin')
+                        <a href="{{ route('admin') }}" class="text-primary">Lihat admin</a>
+                    @else
+                        <span class="text-muted">Pengelola sistem</span>
+                    @endif
                 </div>
             </div>
         </div>
@@ -119,7 +131,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4 class="card-title mb-0">Stok Barang</h4>
-                        <a href="{{ route('barang.create') }}" class="btn btn-sm btn-primary">Tambah Barang</a>
+                        @if (session('auth_role') === 'admin')
+                            <a href="{{ route('barang.create') }}" class="btn btn-sm btn-primary">Tambah Barang</a>
+                        @endif
                     </div>
 
                     <div class="table-responsive">

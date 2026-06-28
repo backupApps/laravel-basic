@@ -61,15 +61,20 @@ class DatabaseSeeder extends Seeder
         ]);
 
         collect([
-            ['nama' => 'Siti Rahmawati'],
-            ['nama' => 'Dimas Pratama'],
-            ['nama' => 'Rizky Maulana'],
-            ['nama' => 'Anisa Putri Lestari'],
-            ['nama' => 'Bagus Setiawan'],
-            ['nama' => 'Maya Kartika'],
+            ['nama' => 'Administrator', 'email' => 'admin@inventaris.test'],
+            ['nama' => 'Siti Rahmawati', 'email' => 'siti.admin@inventaris.test'],
+            ['nama' => 'Dimas Pratama', 'email' => 'dimas.admin@inventaris.test'],
+            ['nama' => 'Rizky Maulana', 'email' => 'rizky.admin@inventaris.test'],
+            ['nama' => 'Anisa Putri Lestari', 'email' => 'anisa.admin@inventaris.test'],
+            ['nama' => 'Bagus Setiawan', 'email' => 'bagus.admin@inventaris.test'],
+            ['nama' => 'Maya Kartika', 'email' => 'maya.admin@inventaris.test'],
         ])->each(fn (array $admin) => Admin::updateOrCreate(
-            ['nama' => $admin['nama']],
-            ['role_user_id' => $roles['Admin']->id],
+            ['email' => $admin['email']],
+            [
+                'role_user_id' => $roles['Admin']->id,
+                'nama' => $admin['nama'],
+                'password' => 'password',
+            ],
         ));
 
         $mahasiswa = collect([
@@ -100,6 +105,8 @@ class DatabaseSeeder extends Seeder
                     'prodi_id' => $prodis[$item['prodi']]->id,
                     'role_user_id' => $roles['Mahasiswa']->id,
                     'nama' => $item['nama'],
+                    'email' => strtolower(str_replace(' ', '.', $item['nama'])).'@student.test',
+                    'password' => 'password',
                     'no_hp' => $item['no_hp'],
                     'alamat' => $item['alamat'],
                 ],

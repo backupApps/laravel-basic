@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('role_user_id')->constrained('role_users')->cascadeOnDelete();
             $table->string('nama', 32);
+            $table->string('email')->unique();
+            $table->string('password');
             $table->timestamps();
         });
     }

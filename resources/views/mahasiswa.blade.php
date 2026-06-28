@@ -24,6 +24,7 @@
                                 <th>No.</th>
                                 <th>Nama</th>
                                 <th>NIM</th>
+                                <th>Email</th>
                                 <th>Prodi</th>
                                 <th>No HP</th>
                                 <th>Role</th>
@@ -36,6 +37,7 @@
                                     <td>{{ $loop->iteration + $mahasiswa->firstItem() - 1 }}</td>
                                     <td>{{ $item->nama }}</td>
                                     <td>{{ $item->nim }}</td>
+                                    <td>{{ $item->email }}</td>
                                     <td>{{ $item->prodi->nama_prodi }}</td>
                                     <td>{{ $item->no_hp }}</td>
                                     <td>{{ $item->roleUser->nama_role }}</td>
@@ -54,7 +56,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center">Belum ada data mahasiswa.</td>
+                                    <td colspan="8" class="text-center">Belum ada data mahasiswa.</td>
                                 </tr>
                             @endforelse
                         </tbody>

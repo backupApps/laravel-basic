@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Mahasiswa;
 use App\Models\RoleUser;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -26,7 +28,13 @@ class AdminController extends Controller
     {
         $data = $request->validate([
             'nama' => ['required', 'string', 'max:32'],
+            'email' => ['required', 'email', 'max:255', 'unique:admins,email'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
+
+        if (Mahasiswa::where('email', $data['email'])->exists()) {
+            return back()->withErrors(['email' => 'Email sudah digunakan.'])->withInput();
+        }
 
         $roleAdmin = RoleUser::where('nama_role', 'Admin')->firstOrFail();
 
@@ -46,7 +54,22 @@ class AdminController extends Controller
     {
         $data = $request->validate([
             'nama' => ['required', 'string', 'max:32'],
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('admins', 'email')->ignore($admin),
+            ],
+            'password' => ['nullable', 'string', 'min:8'],
         ]);
+
+        if (Mahasiswa::where('email', $data['email'])->exists()) {
+            return back()->withErrors(['email' => 'Email sudah digunakan.'])->withInput();
+        }
+
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
 
         $roleAdmin = RoleUser::where('nama_role', 'Admin')->firstOrFail();
 

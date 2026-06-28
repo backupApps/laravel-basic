@@ -27,28 +27,30 @@
                     </a>
                 </li>
 
-                <li class="menu-title text-white">Data Master</li>
+                @if (session('auth_role') === 'admin')
+                    <li class="menu-title text-white">Data Master</li>
 
-                <li>
-                    <a href="{{ route('barang') }}" class="waves-effect">
-                        <i class="mdi mdi-stack-exchange"></i>
-                        <span>Barang</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('barang') }}" class="waves-effect">
+                            <i class="mdi mdi-stack-exchange"></i>
+                            <span>Barang</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="{{ route('mahasiswa') }}" class="waves-effect">
-                        <i class="mdi mdi-school"></i>
-                        <span>Mahasiswa</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('mahasiswa') }}" class="waves-effect">
+                            <i class="mdi mdi-school"></i>
+                            <span>Mahasiswa</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="{{ route('admin') }}" class="waves-effect">
-                        <i class="mdi mdi-account-tie"></i>
-                        <span>Admin</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin') }}" class="waves-effect">
+                            <i class="mdi mdi-account-tie"></i>
+                            <span>Admin</span>
+                        </a>
+                    </li>
+                @endif
 
             </ul>
         </div>

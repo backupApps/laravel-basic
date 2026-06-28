@@ -10,6 +10,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 test('halaman master inventaris bisa dibuka', function () {
+    $this->withSession([
+        'auth_id' => 1,
+        'auth_role' => 'admin',
+        'auth_name' => 'Admin Test',
+    ]);
+
     $this->get('/barang')->assertOk();
     $this->get('/mahasiswa')->assertOk();
     $this->get('/admin')->assertOk();
@@ -18,6 +24,12 @@ test('halaman master inventaris bisa dibuka', function () {
 });
 
 test('data admin mahasiswa barang dan peminjaman bisa disimpan', function () {
+    $this->withSession([
+        'auth_id' => 1,
+        'auth_role' => 'admin',
+        'auth_name' => 'Admin Test',
+    ]);
+
     $roleAdmin = RoleUser::firstOrCreate(['nama_role' => 'Admin']);
     $roleMahasiswa = RoleUser::firstOrCreate(['nama_role' => 'Mahasiswa']);
     $prodi = Prodi::firstOrCreate([
@@ -33,10 +45,13 @@ test('data admin mahasiswa barang dan peminjaman bisa disimpan', function () {
 
     $this->post('/admin', [
         'nama' => 'Admin Uji',
+        'email' => 'admin.uji@test.local',
+        'password' => 'password',
     ])->assertRedirect('/admin');
 
     $this->assertDatabaseHas('admins', [
         'nama' => 'Admin Uji',
+        'email' => 'admin.uji@test.local',
         'role_user_id' => $roleAdmin->id,
     ]);
 
@@ -44,6 +59,8 @@ test('data admin mahasiswa barang dan peminjaman bisa disimpan', function () {
         'prodi_id' => $prodi->id,
         'nama' => 'Mahasiswa Uji',
         'nim' => '99001',
+        'email' => 'mahasiswa.uji@test.local',
+        'password' => 'password',
         'no_hp' => '081234567890',
         'alamat' => 'Alamat uji',
     ])->assertRedirect('/mahasiswa');
@@ -85,4 +102,18 @@ test('data admin mahasiswa barang dan peminjaman bisa disimpan', function () {
         ->assertSee('Mahasiswa Uji')
         ->assertSee('Barang Uji')
         ->assertSee('Aktif');
+});
+
+test('mahasiswa tidak bisa membuka data master', function () {
+    $this->withSession([
+        'auth_id' => 1,
+        'auth_role' => 'mahasiswa',
+        'auth_name' => 'Mahasiswa Test',
+    ]);
+
+    $this->get('/barang')->assertForbidden();
+    $this->get('/mahasiswa')->assertForbidden();
+    $this->get('/admin')->assertForbidden();
+    $this->get('/peminjaman')->assertOk();
+    $this->get('/laporan')->assertOk();
 });

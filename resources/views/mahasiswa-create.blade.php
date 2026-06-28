@@ -39,6 +39,31 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
+                                    <label class="form-label">EMAIL</label>
+                                    <input type="email" name="email"
+                                        class="form-control @error('email') is-invalid @enderror"
+                                        value="{{ old('email') }}" placeholder="mahasiswa@email.com">
+                                    @error('email')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">PASSWORD</label>
+                                    <input type="password" name="password"
+                                        class="form-control @error('password') is-invalid @enderror"
+                                        placeholder="Minimal 8 karakter">
+                                    @error('password')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
                                     <label class="form-label">PRODI</label>
                                     <select name="prodi_id" class="form-select @error('prodi_id') is-invalid @enderror">
                                         <option value="">-- Pilih --</option>

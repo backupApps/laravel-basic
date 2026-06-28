@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Mahasiswa;
 use App\Models\Prodi;
 use App\Models\RoleUser;
@@ -32,9 +33,15 @@ class MahasiswaController extends Controller
             'prodi_id' => ['required', 'exists:prodis,id'],
             'nama' => ['required', 'string', 'max:50'],
             'nim' => ['required', 'string', 'max:10', 'unique:mahasiswa,nim'],
+            'email' => ['required', 'email', 'max:255', 'unique:mahasiswa,email'],
+            'password' => ['required', 'string', 'min:8'],
             'no_hp' => ['required', 'string', 'max:15'],
             'alamat' => ['required', 'string'],
         ]);
+
+        if (Admin::where('email', $data['email'])->exists()) {
+            return back()->withErrors(['email' => 'Email sudah digunakan.'])->withInput();
+        }
 
         $roleMahasiswa = RoleUser::where('nama_role', 'Mahasiswa')->firstOrFail();
 
@@ -63,9 +70,24 @@ class MahasiswaController extends Controller
                 'max:10',
                 Rule::unique('mahasiswa', 'nim')->ignore($mahasiswa),
             ],
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('mahasiswa', 'email')->ignore($mahasiswa),
+            ],
+            'password' => ['nullable', 'string', 'min:8'],
             'no_hp' => ['required', 'string', 'max:15'],
             'alamat' => ['required', 'string'],
         ]);
+
+        if (Admin::where('email', $data['email'])->exists()) {
+            return back()->withErrors(['email' => 'Email sudah digunakan.'])->withInput();
+        }
+
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
 
         $roleMahasiswa = RoleUser::where('nama_role', 'Mahasiswa')->firstOrFail();
 
